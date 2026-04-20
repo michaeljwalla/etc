@@ -9,8 +9,8 @@ from statistics import mean, stdev
 from math import pi
 
 class CSVField(Enum):
-    Timestamp = "timestamp",
-    Green = "position_px_y-green",
+    Timestamp = "timestamp"
+    Green = "position_px_y-green"
 
 
 def get_y_color(c: CSVField, f:str) -> list[tuple[float, float]]:
@@ -18,7 +18,7 @@ def get_y_color(c: CSVField, f:str) -> list[tuple[float, float]]:
     with open(f) as file:
         cdata = csv.reader(file)
         header = next(cdata)
-        ts, col = header.index(CSVField.Timestamp.value[0]), header.index(c.value[0])
+        ts, col = header.index(CSVField.Timestamp.value), header.index(c.value)
         for row in cdata:
             out.append( (float(row[ts]), float(row[col])) )
 
@@ -50,7 +50,8 @@ def get_near(d: list[tuple[float,float]], goal:float, eps:float=15) -> list[tupl
         #append the closest
         if len(run):
             out.append( min(run, key=lambda i: abs(i[1]-goal) ) )
-        i += 1
+        else:
+            i += 1
     #
     return out
 
