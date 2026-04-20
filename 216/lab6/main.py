@@ -1,4 +1,5 @@
 '''
+for i in {1..3}; do python3 main.py < tests/$i; done
 '''
 
 from encodings.punycode import T
