@@ -1,8 +1,8 @@
 '''
+michael walla 4/20
 for i in {1..3}; do python3 main.py < tests/$i; done
 '''
 
-from encodings.punycode import T
 from enum import Enum
 import csv
 from statistics import mean, stdev
