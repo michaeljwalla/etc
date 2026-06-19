@@ -44,16 +44,18 @@ charChecker correct guess idx
 --expects all 3 args same length
 --its separate bc strings are shifting so Correct (==) would fail if not precomputed
 reviseForHints :: String -> String -> [GuessType] -> [GuessType]
-reviseForHints "" _ ts = ts
-reviseForHints _ "" ts = ts
-reviseForHints _ _ [] = []
-reviseForHints correct@(c:cs) (g:gs) (t:ts) 
-    | t /= Incorrect    = t : reviseForHints cs gs ts
-    | otherwise         = t' : reviseForHints correct' gs ts
+reviseForHints correct guess types = go pool guess types
     where
-        gIdx = fuzzidx g correct
-        correct' = exclude gIdx correct
-        t' = if gIdx /= -1 then Elsewhere else t
+        pool = [c | (c, t) <- zip correct types, t /= Correct]
+        go _ [] ts = ts
+        go _ _ [] = []
+        go available (g:gs) (t:ts)
+            | t /= Incorrect = t : go available gs ts
+            | otherwise      = t' : go available' gs ts
+            where
+                gIdx = fuzzidx g available
+                available' = if gIdx /= -1 then exclude gIdx available else available
+                t' = if gIdx /= -1 then Elsewhere else Incorrect
 
 
 -------------------------------- exported funcs
