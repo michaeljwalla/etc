@@ -1,5 +1,6 @@
 import Hangman
 import General
+import System.IO (hSetBuffering, stdout, BufferMode(..))
 
 promptStr :: String -> IO (String)
 promptStr prompt = do
@@ -13,6 +14,7 @@ promptConfirm prompt = do
     putStr prompt
     putStr " [y/N] "
     val <- getChar
+    _ <- getLine
     putStr "\n"
     if General.toLowerCase val == 'y'
         then return True
@@ -48,6 +50,7 @@ gameLoop title maxLives curLives answer lastGuess = do
 
 main :: IO ()
 main = do
+    hSetBuffering stdout NoBuffering
     --initial
     let gameName = "HANGMAN"
         gameLives = length gameName
