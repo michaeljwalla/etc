@@ -1,3 +1,21 @@
-main
+# Cabal build artifacts and directories
+dist-newstyle/
+.cabal-sandbox/
+cabal.sandbox.config
+
+# GHC temporary and build files (if building with ghc --make directly)
 build/
 
+# Stack build artifacts (if you ever use Stack)
+.stack-work/
+
+# Local configuration overrides
+cabal.project.local
+cabal.project.local~
+cabal.project.freeze
+
+# OS/Editor specific files
+.DS_Store
+.vscode/
+.idea/
+*.swp
